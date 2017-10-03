@@ -1,0 +1,957 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+                                
+    \usepackage{rotating}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{IMDB 5000 metadata}
+    % Auther
+    \author{
+    Jakobe Iversen\\
+    \texttt{s143262}
+    \and
+    Mattias Andersen\\
+    \texttt{s154057}
+    }
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{IMDB 5000 movie metadata}\label{imdb-5000-movie-metadata}
+
+    We will start by loading the dataset into a pandas dataframe, and
+inspect the attributes of the first entry
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{PCA} \PY{c+c1}{\PYZsh{} Principal component analysis}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{StandardScaler} \PY{c+c1}{\PYZsh{} to standardize the data}
+        
+        \PY{n}{df} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+        \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{raw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./data/movie\PYZus{}metadata.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \section{1. A description of the data set.
+(Jakob)}\label{a-description-of-the-data-set.-jakob}
+
+    \subsubsection{Problem of interest}\label{problem-of-interest}
+
+    The data consists of 28 attributes, regarded as meta data of movies.
+
+    \subsubsection{Where the dataset was
+obtained}\label{where-the-dataset-was-obtained}
+
+    The dataset was provided by kaggle.com After obtaining the dataset, it
+has been removed due to a DMCA complaint, and replaced with an
+alternative dataset. This project is not compatible with the new
+dataset.
+
+    \subsubsection{What have previously been done to the
+data}\label{what-have-previously-been-done-to-the-data}
+
+    The data has been scraped from the IMDB web site, using a python script.
+The data has not been pre-proccesed, which means we will expect some NaN
+values.
+
+    \subsubsection{Aim and relevant
+attributes}\label{aim-and-relevant-attributes}
+
+    Our aim is to do a classification, to predict what score a movie will
+get on IMDB. We also want to do a linear regresion of the gross of a
+movie. To consider which attributes are relevant, we will print out the
+first movie, and look at what attributes will be relevant.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{raw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+color                                                                    Color
+director\_name                                                    James Cameron
+num\_critic\_for\_reviews                                                     723
+duration                                                                   178
+director\_facebook\_likes                                                      0
+actor\_3\_facebook\_likes                                                     855
+actor\_2\_name                                                  Joel David Moore
+actor\_1\_facebook\_likes                                                    1000
+gross                                                              7.60506e+08
+genres                                         Action|Adventure|Fantasy|Sci-Fi
+actor\_1\_name                                                       CCH Pounder
+movie\_title                                                            Avatar 
+num\_voted\_users                                                         886204
+cast\_total\_facebook\_likes                                                 4834
+actor\_3\_name                                                         Wes Studi
+facenumber\_in\_poster                                                         0
+plot\_keywords                           avatar|future|marine|native|paraplegic
+movie\_imdb\_link              http://www.imdb.com/title/tt0499549/?ref\_=fn\_t{\ldots}
+num\_user\_for\_reviews                                                      3054
+language                                                               English
+country                                                                    USA
+content\_rating                                                           PG-13
+budget                                                                2.37e+08
+title\_year                                                                2009
+actor\_2\_facebook\_likes                                                     936
+imdb\_score                                                                 7.9
+aspect\_ratio                                                              1.78
+movie\_facebook\_likes                                                     33000
+Name: 0, dtype: object
+
+    \end{Verbatim}
+
+    From this data, we will chose to focus on numerical data. We do this,
+partly because we feel some of the categorical data is better explained
+by the numerical data, I.E. wether or not the instructor is James
+cameron or not, might not be as relevant as measuring the popularity of
+a director through facebook likes. This might not be true for categories
+like genre, but we hope to build a more simple model of prediction, by
+limiting the prediction to numerical data.
+
+    \section{2. Detailed explanation of the
+attributes(Mattias)}\label{detailed-explanation-of-the-attributesmattias}
+
+This dataset consists of 28 different attributes and they together hold
+information about a movie.
+
+\subsection{Attribute description}\label{attribute-description}
+
+A detailed explination of the attributes is shown in the table below.
+Where each attribute can be discrete or continous, and each attributes'
+objects are of different types. 
+
+\begin{sidewaystable}
+\centering
+\caption{Attribute description}
+\label{my-label}
+\begin{tabular}{llll}
+\textbf{Attribute}           & \textbf{Description}                                  & \textbf{Discrete/Continous} & \textbf{Type of attribute} \\
+movie\_title                 & Holds title of the movie.                             & Discrete                    & Nominal                    \\
+director\_name               & Name of director of the movie.                        & Discrete                    & Nominal                    \\
+color                        & Shown in color or black and white.                    & Discrete                    & Nominal                    \\
+duration                     & Duration of the movie in minutes.                     & Discrete                    & Rati                       \\
+actor\_1\_name               & Name of lead actor.                                   & Discrete                    & Nominal                    \\
+actor\_2\_name               & Name of second actor.                                 & Discrete                    & Nominal                    \\
+actor\_3\_name               & Name of third actor.                                  & Discrete                    & Nominal                    \\
+title\_year                  & Year of release.                                      & Discrete                    & Interval                   \\
+genres                       & Genres the movie belongs to.                          & Discrete                    & Nominal                    \\
+aspect\_ratio                & Aspect ratio                                          & Discrete                    & Nominal                    \\
+facenumber\_in\_poster       & Number of faces shown in movie poster.                & Discrete                    & Ratio                      \\
+language                     & Language spoken in the movie.                         & Discrete                    & Nominal                    \\
+country                      & Country where the movie is filmed.                    & Discrete                    & Nominal                    \\
+budget                       & Cost of the movie.                                    & Continous                   & Ratio                      \\
+gross                        & Income of the movie.                                  & Continous                   & Ratio                      \\
+movie\_facebook\_likes       & Count of facebook likes for the movie.                & Discrete                    & Ratio                      \\
+director\_facebook\_likes    & Count of facebook likes the director has.             & Discrete                    & Ratio                      \\
+actor\_1\_facebook\_likes    & Facebook likes actor 1 has.                           & Discrete                    & Ratio                      \\
+actor\_2\_facebook\_likes    & Facebook likes actor 2 has.                           & Discrete                    & Ratio                      \\
+actor\_3\_facebook\_likes    & Facebook likes actor 3 has.                           & Discrete                    & Ratio                      \\
+cast\_total\_facebook\_likes & Total facebook likes for the whole cast of the movie. & Discrete                    & Ratio                      \\
+plot\_keywords               & Keywords describing the movie.                        & Discrete                    & Nominal                    \\
+content\_rating              & Rating of the movie.                                  & Discrete                    & Nominal                    \\
+num\_user\_for\_reviews      & Number of users who wrote reviews.                    & Discrete                    & Ratio                      \\
+num\_critic\_for\_reviews    & Number of critics who wrote reviews.                  & Discrete                    & Ratio                      \\
+num\_voted\_users            & Count of users who have voted the movie.              & Discrete                    & Ratio                      \\
+movie\_imdb\_link            & Holds a link to the movie on the site imdb.           & Discrete                    & Nominal                    \\
+imdb\_scoreMovie             & score on IMDB                                         & Continous                   & Ordinal                   
+\end{tabular}
+\end{sidewaystable}
+
+    \subsection{Summary statistics}\label{summary-statistics}
+
+A summary over the different numerical attributes of the dataset.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{raw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:}        num\_critic\_for\_reviews     duration  director\_facebook\_likes  \textbackslash{}
+         count             4993.000000  5028.000000              4939.000000   
+         mean               140.194272   107.201074               686.509212   
+         std                121.601675    25.197441              2813.328607   
+         min                  1.000000     7.000000                 0.000000   
+         25\%                 50.000000    93.000000                 7.000000   
+         50\%                110.000000   103.000000                49.000000   
+         75\%                195.000000   118.000000               194.500000   
+         max                813.000000   511.000000             23000.000000   
+         
+                actor\_3\_facebook\_likes  actor\_1\_facebook\_likes         gross  \textbackslash{}
+         count             5020.000000             5036.000000  4.159000e+03   
+         mean               645.009761             6560.047061  4.846841e+07   
+         std               1665.041728            15020.759120  6.845299e+07   
+         min                  0.000000                0.000000  1.620000e+02   
+         25\%                133.000000              614.000000  5.340988e+06   
+         50\%                371.500000              988.000000  2.551750e+07   
+         75\%                636.000000            11000.000000  6.230944e+07   
+         max              23000.000000           640000.000000  7.605058e+08   
+         
+                num\_voted\_users  cast\_total\_facebook\_likes  facenumber\_in\_poster  \textbackslash{}
+         count     5.043000e+03                5043.000000           5030.000000   
+         mean      8.366816e+04                9699.063851              1.371173   
+         std       1.384853e+05               18163.799124              2.013576   
+         min       5.000000e+00                   0.000000              0.000000   
+         25\%       8.593500e+03                1411.000000              0.000000   
+         50\%       3.435900e+04                3090.000000              1.000000   
+         75\%       9.630900e+04               13756.500000              2.000000   
+         max       1.689764e+06              656730.000000             43.000000   
+         
+                num\_user\_for\_reviews        budget   title\_year  \textbackslash{}
+         count           5022.000000  4.551000e+03  4935.000000   
+         mean             272.770808  3.975262e+07  2002.470517   
+         std              377.982886  2.061149e+08    12.474599   
+         min                1.000000  2.180000e+02  1916.000000   
+         25\%               65.000000  6.000000e+06  1999.000000   
+         50\%              156.000000  2.000000e+07  2005.000000   
+         75\%              326.000000  4.500000e+07  2011.000000   
+         max             5060.000000  1.221550e+10  2016.000000   
+         
+                actor\_2\_facebook\_likes   imdb\_score  aspect\_ratio  movie\_facebook\_likes  
+         count             5030.000000  5043.000000   4714.000000           5043.000000  
+         mean              1651.754473     6.442138      2.220403           7525.964505  
+         std               4042.438863     1.125116      1.385113          19320.445110  
+         min                  0.000000     1.600000      1.180000              0.000000  
+         25\%                281.000000     5.800000      1.850000              0.000000  
+         50\%                595.000000     6.600000      2.350000            166.000000  
+         75\%                918.000000     7.200000      2.350000           3000.000000  
+         max             137000.000000     9.500000     16.000000         349000.000000  
+\end{Verbatim}
+        
+    \section{3. data visualization(Jakob) and
+PCA(Mattias)}\label{data-visualizationjakob-and-pcamattias}
+
+    Before we start, we will take alle the numeric data of the dataset, and
+drop the lines with NA. We drop the lines, because it is assumed the web
+scrapper made an error while scraping for the movie.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{raw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{\PYZus{}get\PYZus{}numeric\PYZus{}data}\PY{p}{(}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+m+mi}{100}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{raw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{raw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{} o}\PY{l+s+s2}{f the dataset remain, after dropping NA}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{A list of the remaining attributes are shown below.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{list}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+99.75371802498513 \% of the dataset remain, after dropping NA's.
+A list of the remaining attributes are shown below
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} ['num\_critic\_for\_reviews',
+          'duration',
+          'director\_facebook\_likes',
+          'actor\_3\_facebook\_likes',
+          'actor\_1\_facebook\_likes',
+          'gross',
+          'num\_voted\_users',
+          'cast\_total\_facebook\_likes',
+          'facenumber\_in\_poster',
+          'num\_user\_for\_reviews',
+          'budget',
+          'title\_year',
+          'actor\_2\_facebook\_likes',
+          'imdb\_score',
+          'aspect\_ratio',
+          'movie\_facebook\_likes']
+\end{Verbatim}
+        
+    The list printout of the dataset only with the numerical data, shows
+that the analysation of the data will only include these 16 attributes.
+
+    \subsection{Boxplot}\label{boxplot}
+
+We will use boxplots, to investigete wether or not the dataset contains
+outliers
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{labelsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+        
+        \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{labelsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Histogram}\label{histogram}
+
+The boxplot tells us that all the attributes contain outliers. These
+will have to be removed from the dataset, before plotting the
+histograms, to give a meaningfull insight as to wether or not the
+attributes are normally distributed.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{stats}
+        \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{no\PYZus{}outliers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{stats}\PY{o}{.}\PY{n}{zscore}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{all}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
+        \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{no\PYZus{}outliers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the histograms, it is clear that only IMDB\_score and duration is
+somewhere normally distributed. IMDB\_score seemes to be a little
+left-skewed, which tells us that most movies are good movies, while not
+so many bad movies are included. Duration on the other hand, seems to be
+slightly right hand-skewed, which tells us that only a few movies are
+considered long.
+
+\subsection{Heatmap}\label{heatmap}
+
+We will use a heatmap, to investigate what attributes correlate with
+each other.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{labelsize}\PY{o}{=}\PY{l+m+mi}{14}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the heatmap, we can identify correlation on the dataset to be:
+num\_user\_for\_reviews \& num\_voted\_users (medium)
+num\_critics\_for\_reviews \& movie\_facebook\_likes (low)
+actor\_1\_facebook\_likes \& cast\_total\_facebook\_likes (high) We will
+now choose a minimum value for the attributes, and see if that changes
+the correlation. Facebook likes (generel): 100 reviews (generel): 10
+votes: 100
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}user\PYZus{}for\PYZus{}reviews}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}voted\PYZus{}users}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}critic\PYZus{}for\PYZus{}reviews}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{movie\PYZus{}facebook\PYZus{}likes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actor\PYZus{}1\PYZus{}facebook\PYZus{}likes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cast\PYZus{}total\PYZus{}facebook\PYZus{}likes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+        \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}user\PYZus{}for\PYZus{}reviews}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{10}\PY{p}{)} \PY{o}{\PYZam{}} 
+                                      \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}critic\PYZus{}for\PYZus{}reviews}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{10}\PY{p}{)} \PY{o}{\PYZam{}}
+                                      \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}voted\PYZus{}users}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{100}\PY{p}{)} \PY{o}{\PYZam{}}
+                                      \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{movie\PYZus{}facebook\PYZus{}likes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{100}\PY{p}{)} \PY{o}{\PYZam{}}
+                                      \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actor\PYZus{}1\PYZus{}facebook\PYZus{}likes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{100}\PY{p}{)} \PY{o}{\PYZam{}}
+                                      \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cast\PYZus{}total\PYZus{}facebook\PYZus{}likes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{]}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{This removes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{p}{(}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{o}{/}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{} o}\PY{l+s+s2}{f the data, leaving}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rows.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This removes 49.72375690607735 \% of the data, leaving 1911 rows.
+
+    \end{Verbatim}
+
+    By setting these conditions, we removed nearly half of the dataset. This
+is far from perfect, and could be done more efficently. We choose to try
+and map the correlation, to get an undertanding of wether or not this
+approach changes anything.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{heatmap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{labelsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the new heatmap, it is clear that the correlation is nearly the
+same. As expected the correlation has generally increased, except for
+actor 1 vs cast facebook likes, which has decreased. The increased
+correlation dosent seem to be of a significant magnitude.
+
+    \subsection{Eigendecomposition}\label{eigendecomposition}
+
+The data is preprocessed, where the eigenvectors and eigenvalues are
+found with an eigendecomposition of the covariance matrix.
+
+    \subsubsection{Covariance between
+features}\label{covariance-between-features}
+
+To be able to perform an eigendecomposition to find the eigenvalues and
+eigenvectors, we first need to find the covariance between the features.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{mean\PYZus{}vector} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{cov\PYZus{}matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cov}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{numeric\PYZus{}std}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Covariance matrix: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{cov\PYZus{}matrix}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Covariance matrix: 
+           0         1         2         3         4         5         6   \textbackslash{}
+0   1.000000  0.227705  0.176916  0.255086  0.170198  0.468535  0.594990   
+1   0.227705  1.000000  0.179734  0.125771  0.084720  0.244743  0.338038   
+2   0.176916  0.179734  1.000000  0.118240  0.090733  0.139938  0.300619   
+3   0.255086  0.125771  0.118240  1.000000  0.253720  0.301584  0.269455   
+4   0.170198  0.084720  0.090733  0.253720  1.000000  0.147045  0.182265   
+5   0.468535  0.244743  0.139938  0.301584  0.147045  1.000000  0.626948   
+6   0.594990  0.338038  0.300619  0.269455  0.182265  0.626948  1.000000   
+7   0.241005  0.121171  0.119741  0.490686  0.944925  0.238687  0.251940   
+8  -0.034009  0.029100 -0.047619  0.105018  0.057580 -0.032254 -0.032026   
+9   0.566795  0.350391  0.218311  0.207321  0.125221  0.547107  0.779925   
+10  0.105681  0.068161  0.018559  0.040478  0.017086  0.100389  0.066824   
+11  0.410380 -0.129422 -0.044606  0.115535  0.093742  0.052368  0.021938   
+12  0.255837  0.129452  0.116900  0.554182  0.392676  0.254659  0.246660   
+13  0.343881  0.366124  0.190838  0.064974  0.093131  0.212124  0.477917   
+14  0.180641  0.153114  0.037871  0.047123  0.057604  0.065260  0.085485   
+15  0.703969  0.214936  0.162737  0.272513  0.131778  0.368494  0.518691   
+
+          7         8         9         10        11        12        13  \textbackslash{}
+0   0.241005 -0.034009  0.566795  0.105681  0.410380  0.255837  0.343881   
+1   0.121171  0.029100  0.350391  0.068161 -0.129422  0.129452  0.366124   
+2   0.119741 -0.047619  0.218311  0.018559 -0.044606  0.116900  0.190838   
+3   0.490686  0.105018  0.207321  0.040478  0.115535  0.554182  0.064974   
+4   0.944925  0.057580  0.125221  0.017086  0.093742  0.392676  0.093131   
+5   0.238687 -0.032254  0.547107  0.100389  0.052368  0.254659  0.212124   
+6   0.251940 -0.032026  0.779925  0.066824  0.021938  0.246660  0.477917   
+7   1.000000  0.080985  0.182288  0.029423  0.124015  0.644016  0.106259   
+8   0.080985  1.000000 -0.079404 -0.021757  0.067952  0.074138 -0.064292   
+9   0.182288 -0.079404  1.000000  0.071254  0.017594  0.189582  0.322522   
+10  0.029423 -0.021757  0.071254  1.000000  0.046293  0.036211  0.029041   
+11  0.124015  0.067952  0.017594  0.046293  1.000000  0.119739 -0.129265   
+12  0.644016  0.074138  0.189582  0.036211  0.119739  1.000000  0.102060   
+13  0.106259 -0.064292  0.322522  0.029041 -0.129265  0.102060  1.000000   
+14  0.069675  0.016620  0.098557  0.025796  0.219779  0.064215  0.028454   
+15  0.207061  0.014332  0.371970  0.053035  0.302835  0.233632  0.279478   
+
+          14        15  
+0   0.180641  0.703969  
+1   0.153114  0.214936  
+2   0.037871  0.162737  
+3   0.047123  0.272513  
+4   0.057604  0.131778  
+5   0.065260  0.368494  
+6   0.085485  0.518691  
+7   0.069675  0.207061  
+8   0.016620  0.014332  
+9   0.098557  0.371970  
+10  0.025796  0.053035  
+11  0.219779  0.302835  
+12  0.064215  0.233632  
+13  0.028454  0.279478  
+14  1.000000  0.110318  
+15  0.110318  1.000000  
+
+    \end{Verbatim}
+
+    \subsubsection{Eigenvalues and
+eigenvectors}\label{eigenvalues-and-eigenvectors}
+
+Now the eigendecomposition of the covariance matrix can be performed.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{eigen\PYZus{}val}\PY{p}{,} \PY{n}{eigen\PYZus{}vec} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eig}\PY{p}{(}\PY{n}{cov\PYZus{}matrix}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Eigenvalues: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{eigen\PYZus{}val}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Eigenvectors: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{eigen\PYZus{}vec}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Eigenvalues: 
+            0
+0   4.445805
+1   2.136388
+2   1.496763
+3   0.001771
+4   0.149833
+5   0.245490
+6   0.415714
+7   0.443200
+8   0.483090
+9   0.591156
+10  0.781094
+11  1.051047
+12  1.013853
+13  0.995797
+14  0.865921
+15  0.883081
+Eigenvectors: 
+           0         1         2         3         4         5         6   \textbackslash{}
+0  -0.362354 -0.155232 -0.327054 -0.001620 -0.331574 -0.750503 -0.041216   
+1  -0.206547 -0.177457  0.272901  0.001781 -0.082209  0.022426  0.001478   
+2  -0.158009 -0.094838  0.208406 -0.000006  0.057453 -0.049707 -0.031895   
+3  -0.252237  0.277675  0.006544  0.111629 -0.007320 -0.052765  0.640803   
+4  -0.222852  0.463064  0.164287  0.616236  0.013754 -0.008826  0.140744   
+5  -0.317778 -0.135717  0.017333  0.012664  0.150519 -0.075840 -0.205560   
+6  -0.385210 -0.240217  0.093722 -0.001502 -0.659253  0.483335  0.060286   
+7  -0.284547  0.505361  0.148158 -0.757892  0.013455 -0.004442  0.039677   
+8  -0.004622  0.161083 -0.088785  0.000465  0.027568 -0.051492 -0.042603   
+9  -0.340355 -0.257060  0.074307 -0.000977  0.542281 -0.049412  0.136651   
+10 -0.057873 -0.037668 -0.067696 -0.000343  0.006653  0.035775  0.009101   
+11 -0.102572  0.114371 -0.667981  0.000974  0.065662  0.271071  0.102190   
+12 -0.263037  0.365829  0.062501  0.182208  0.001756  0.042682 -0.686442   
+13 -0.222104 -0.238787  0.272306 -0.004567  0.197252 -0.001867  0.072548   
+14 -0.092043 -0.007484 -0.290456 -0.000429  0.010861  0.009207 -0.009985   
+15 -0.317372 -0.122225 -0.300752  0.001010  0.289985  0.331305 -0.108632   
+
+          7         8         9         10        11        12        13  \textbackslash{}
+0  -0.116389  0.036545 -0.029760  0.071827 -0.061316  0.037905  0.081510   
+1   0.068313 -0.101619 -0.703490  0.249215  0.480791 -0.061195 -0.157182   
+2   0.093815 -0.012812 -0.034403 -0.273099  0.126949  0.120085  0.160521   
+3   0.045459  0.056373  0.076949  0.343233 -0.138729 -0.284859 -0.135369   
+4   0.040965  0.103225 -0.075917 -0.261221  0.078790  0.287897  0.113896   
+5   0.715876  0.092710 -0.024031 -0.296164 -0.248506 -0.109607 -0.126009   
+6  -0.143677 -0.060834  0.163757 -0.202532 -0.102664 -0.064023  0.037687   
+7   0.004679  0.040474 -0.030542 -0.093371  0.023544  0.164534  0.054089   
+8  -0.024626 -0.010567  0.133912 -0.320901  0.345420 -0.759305 -0.207488   
+9  -0.511961 -0.285736 -0.027260 -0.303659 -0.110103 -0.017139 -0.005135   
+10 -0.050465  0.029301  0.084763 -0.009318 -0.066195  0.321987 -0.900841   
+11  0.222318 -0.561258 -0.183168  0.011778  0.024169  0.089325  0.090690   
+12 -0.196303 -0.228572  0.107281  0.309857 -0.067118 -0.102478 -0.065726   
+13  0.268416 -0.242306  0.517461  0.416090  0.199927  0.049891  0.102415   
+14 -0.022946  0.190690  0.330770 -0.110311  0.682436  0.255166 -0.006485   
+15 -0.101522  0.644562 -0.122173  0.240690 -0.063741 -0.081187  0.117026   
+
+          14        15  
+0  -0.164751 -0.053200  
+1   0.065932 -0.090268  
+2  -0.252499  0.843224  
+3   0.313751  0.295252  
+4  -0.229883 -0.260482  
+5   0.315229 -0.105331  
+6   0.030401 -0.064023  
+7  -0.086317 -0.127295  
+8  -0.310962 -0.060707  
+9   0.185893 -0.116929  
+10 -0.230444  0.076745  
+11 -0.154129  0.057410  
+12  0.198561  0.172609  
+13 -0.342140 -0.183407  
+14  0.464810  0.037680  
+15 -0.255101  0.013326  
+
+    \end{Verbatim}
+
+    \subsection{Selecting principal
+components}\label{selecting-principal-components}
+
+The next step towards the goal of the principal component analysis is to
+find the number of principal components to include in the model.
+
+First the eigenvalues and eigenvectors are gathered in tuples.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{eigen\PYZus{}pairs} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{eigen\PYZus{}val}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{eigen\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{eigen\PYZus{}val}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+         
+         \PY{n}{eigen\PYZus{}pairs}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         \PY{n}{eigen\PYZus{}pairs}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Eigenvalues from highest to lowest:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{eig\PYZus{}val} \PY{o+ow}{in} \PY{n}{eigen\PYZus{}pairs}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{eig\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Eigenvalues from highest to lowest:
+4.44580469646
+2.1363882565
+1.49676251129
+1.05104701557
+1.01385279214
+0.995797014572
+0.883080919082
+0.86592055526
+0.781093607224
+0.591155511436
+0.483090304644
+0.443199530174
+0.415713571524
+0.245489846152
+0.149832591928
+0.00177127604066
+
+    \end{Verbatim}
+
+    \subsubsection{Explained variance}\label{explained-variance}
+
+A plot is generated showing the explained variance.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{var\PYZus{}explained} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{i} \PY{o}{/} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{eigen\PYZus{}val}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{eigen\PYZus{}val}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{]}
+         \PY{n}{cum\PYZus{}var\PYZus{}explained} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{var\PYZus{}explained}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{)}\PY{p}{,} \PY{n}{var\PYZus{}explained}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Individual explained variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{)}\PY{p}{,} \PY{n}{cum\PYZus{}var\PYZus{}explained}\PY{p}{,} \PY{n}{where}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cumulative explained variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dashed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{90 }\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dashed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10 principal components}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Explained variance by different principal components}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Explained variance in percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal components}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Explained variance with 10 principal components: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{n}{var\PYZus{}explained}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_41_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Explained variance with 10 principal components: 89.13064299709966 \%
+
+    \end{Verbatim}
+
+    It is shown in the plot above, that 10 principal components explain
+approximately 90\% of the total variance.
+
+    \subsection{Data projection}\label{data-projection}
+
+The 16 principal components represent a 16 dimensional feature space. We
+can acheive 90 \% of the explained variance by projecting 10 principal
+components onto a new feature space of 10 dimensions.
+
+A projection matrix is constructed, which will represent a
+10-dimensional feature space including the 10 first principal components
+as columns.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{projection\PYZus{}mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{(}\PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{7}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                                    \PY{n}{eigen\PYZus{}pairs}\PY{p}{[}\PY{l+m+mi}{9}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component space(10\PYZhy{}dimensional): }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{projection\PYZus{}mat}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Principal component space(10-dimensional): 
+            0         1         2         3         4         5         6  \textbackslash{}
+0  -0.362354 -0.155232 -0.327054 -0.061316  0.037905  0.081510 -0.053200   
+1  -0.206547 -0.177457  0.272901  0.480791 -0.061195 -0.157182 -0.090268   
+2  -0.158009 -0.094838  0.208406  0.126949  0.120085  0.160521  0.843224   
+3  -0.252237  0.277675  0.006544 -0.138729 -0.284859 -0.135369  0.295252   
+4  -0.222852  0.463064  0.164287  0.078790  0.287897  0.113896 -0.260482   
+5  -0.317778 -0.135717  0.017333 -0.248506 -0.109607 -0.126009 -0.105331   
+6  -0.385210 -0.240217  0.093722 -0.102664 -0.064023  0.037687 -0.064023   
+7  -0.284547  0.505361  0.148158  0.023544  0.164534  0.054089 -0.127295   
+8  -0.004622  0.161083 -0.088785  0.345420 -0.759305 -0.207488 -0.060707   
+9  -0.340355 -0.257060  0.074307 -0.110103 -0.017139 -0.005135 -0.116929   
+10 -0.057873 -0.037668 -0.067696 -0.066195  0.321987 -0.900841  0.076745   
+11 -0.102572  0.114371 -0.667981  0.024169  0.089325  0.090690  0.057410   
+12 -0.263037  0.365829  0.062501 -0.067118 -0.102478 -0.065726  0.172609   
+13 -0.222104 -0.238787  0.272306  0.199927  0.049891  0.102415 -0.183407   
+14 -0.092043 -0.007484 -0.290456  0.682436  0.255166 -0.006485  0.037680   
+15 -0.317372 -0.122225 -0.300752 -0.063741 -0.081187  0.117026  0.013326   
+
+           7         8         9  
+0  -0.164751  0.071827 -0.029760  
+1   0.065932  0.249215 -0.703490  
+2  -0.252499 -0.273099 -0.034403  
+3   0.313751  0.343233  0.076949  
+4  -0.229883 -0.261221 -0.075917  
+5   0.315229 -0.296164 -0.024031  
+6   0.030401 -0.202532  0.163757  
+7  -0.086317 -0.093371 -0.030542  
+8  -0.310962 -0.320901  0.133912  
+9   0.185893 -0.303659 -0.027260  
+10 -0.230444 -0.009318  0.084763  
+11 -0.154129  0.011778 -0.183168  
+12  0.198561  0.309857  0.107281  
+13 -0.342140  0.416090  0.517461  
+14  0.464810 -0.110311  0.330770  
+15 -0.255101  0.240690 -0.122173  
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

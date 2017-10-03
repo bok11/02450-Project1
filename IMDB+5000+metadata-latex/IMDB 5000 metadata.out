@@ -1,0 +1,19 @@
+\BOOKMARK [1][-]{section.1}{IMDB 5000 movie metadata}{}% 1
+\BOOKMARK [1][-]{section.2}{1. A description of the data set. \(Jakob\)}{}% 2
+\BOOKMARK [2][-]{subsubsection.2.0.1}{Problem of interest}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.0.2}{Where the dataset was obtained}{subsubsection.2.0.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.0.3}{What have previously been done to the data}{subsubsection.2.0.1}% 5
+\BOOKMARK [3][-]{subsubsection.2.0.4}{Aim and relevant attributes}{subsubsection.2.0.1}% 6
+\BOOKMARK [1][-]{section.3}{2. Detailed explanation of the attributes\(Mattias\)}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Attribute description}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Summary statistics}{section.3}% 9
+\BOOKMARK [1][-]{section.4}{3. data visualization\(Jakob\) and PCA\(Mattias\)}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{Boxplot}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{Histogram}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.3}{Heatmap}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.4}{Eigendecomposition}{section.4}% 14
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Covariance between features}{subsection.4.4}% 15
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Eigenvalues and eigenvectors}{subsection.4.4}% 16
+\BOOKMARK [2][-]{subsection.4.5}{Selecting principal components}{section.4}% 17
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Explained variance}{subsection.4.5}% 18
+\BOOKMARK [2][-]{subsection.4.6}{Data projection}{section.4}% 19
